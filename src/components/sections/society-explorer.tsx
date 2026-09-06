@@ -1,8 +1,10 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { societies } from "@/content/site";
+import { societies, societyHref } from "@/content/site";
 import { MediaFrame } from "@/components/ui/media-frame";
 import { ease } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -123,13 +125,19 @@ export function SocietyExplorer() {
                 transition={{ duration: 0.28, ease: ease.out }}
                 className="grid grid-cols-1 gap-8 sm:grid-cols-2 sm:items-start"
               >
-                <MediaFrame
-                  tone="deep"
-                  aspect="3 / 4"
-                  accent={society.accent}
-                  caption={`${society.abbr} activity`}
-                  className="border-dark-line"
-                />
+                <motion.div
+                  initial={reduced ? false : { clipPath: "inset(0 0 100% 0)" }}
+                  animate={{ clipPath: "inset(0 0 0% 0)" }}
+                  transition={{ duration: 0.55, ease: ease.out }}
+                >
+                  <MediaFrame
+                    tone="deep"
+                    aspect="3 / 4"
+                    accent={society.accent}
+                    caption={`${society.abbr} activity`}
+                    className="border-dark-line"
+                  />
+                </motion.div>
                 <div>
                   <div className="flex items-center gap-3">
                     <span
@@ -160,6 +168,20 @@ export function SocietyExplorer() {
                       </li>
                     ))}
                   </ul>
+
+                  <Link
+                    href={societyHref(society.id)}
+                    className="group mt-8 inline-flex items-center gap-1.5 text-sm font-medium text-dark-text"
+                  >
+                    <span className="relative">
+                      Learn more about {society.abbr}
+                      <span
+                        className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-current transition-transform duration-300 ease-out group-hover:scale-x-100"
+                        aria-hidden
+                      />
+                    </span>
+                    <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </Link>
                 </div>
               </motion.div>
             </AnimatePresence>

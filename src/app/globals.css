@@ -155,6 +155,110 @@
   }
 }
 
+/* ---- decorative motion (frozen under reduced-motion below) ---- */
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(64px);
+  opacity: 0.5;
+  will-change: transform;
+}
+.aurora-blob--1 {
+  width: 42rem;
+  height: 42rem;
+  left: -12rem;
+  top: -16rem;
+  background: radial-gradient(
+    circle at 30% 30%,
+    color-mix(in oklab, var(--ieee-cyan) 55%, transparent),
+    transparent 65%
+  );
+  animation: aurora-1 19s ease-in-out infinite alternate;
+}
+.aurora-blob--2 {
+  width: 40rem;
+  height: 40rem;
+  right: -14rem;
+  top: -10rem;
+  background: radial-gradient(
+    circle at 60% 40%,
+    color-mix(in oklab, var(--ieee-blue) 48%, transparent),
+    transparent 66%
+  );
+  animation: aurora-2 23s ease-in-out infinite alternate;
+}
+.aurora-blob--3 {
+  width: 34rem;
+  height: 34rem;
+  left: 32%;
+  bottom: -18rem;
+  background: radial-gradient(
+    circle at 50% 50%,
+    color-mix(in oklab, var(--accent-purple) 30%, transparent),
+    transparent 67%
+  );
+  animation: aurora-3 27s ease-in-out infinite alternate;
+}
+@keyframes aurora-1 {
+  to {
+    transform: translate3d(5rem, 3rem, 0) scale(1.12);
+  }
+}
+@keyframes aurora-2 {
+  to {
+    transform: translate3d(-4rem, 4rem, 0) scale(1.15);
+  }
+}
+@keyframes aurora-3 {
+  to {
+    transform: translate3d(3rem, -3rem, 0) scale(1.1);
+  }
+}
+
+.aurora-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.media-sheen {
+  background: linear-gradient(
+    100deg,
+    transparent,
+    color-mix(in oklab, white 22%, transparent),
+    transparent
+  );
+  filter: blur(6px);
+  transform: skewX(-12deg);
+  animation: media-sheen 7s ease-in-out infinite;
+}
+@keyframes media-sheen {
+  0% {
+    transform: translateX(-150%) skewX(-12deg);
+  }
+  60%,
+  100% {
+    transform: translateX(560%) skewX(-12deg);
+  }
+}
+
+.marquee-track {
+  animation: marquee var(--marquee-duration, 34s) linear infinite;
+  animation-direction: var(--marquee-direction, normal);
+  will-change: transform;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

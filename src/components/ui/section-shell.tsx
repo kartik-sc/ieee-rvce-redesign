@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/ui/reveal";
+import { MaskReveal } from "@/components/motion/mask-reveal";
 
 type Background = "bg" | "surface" | "deep" | "blue";
 
@@ -88,7 +89,9 @@ export function SectionIntro({
             <span className="text-sm font-medium text-text-muted">{label}</span>
           </div>
         ) : null}
-        <h2 className="text-h2 font-semibold text-balance">{title}</h2>
+        <h2 className="text-h2 font-semibold text-balance">
+          <MaskReveal lines={[title]} />
+        </h2>
         {lead ? (
           <p className="mt-5 text-lg leading-relaxed text-text-muted text-pretty">
             {lead}

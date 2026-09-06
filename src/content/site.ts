@@ -17,12 +17,13 @@ export const branch = {
 export type NavLink = { label: string; href: string };
 
 export const nav: NavLink[] = [
-  { label: "Societies", href: "#societies" },
-  { label: "CSITSS", href: "#csitss" },
-  { label: "About", href: "#about" },
-  { label: "Participate", href: "#participate" },
-  { label: "Contact", href: "#contact" },
+  { label: "Societies", href: "/#societies" },
+  { label: "CSITSS", href: "/csitss" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/#contact" },
 ];
+
+export const societyHref = (id: string) => `/societies/${id}`;
 
 export type Proof = { value: string; label: string; mono?: boolean };
 
@@ -45,6 +46,8 @@ export type Society = {
   /** CSS custom property used as the controlled state accent */
   accent: string;
   accentName: string;
+  /** longer copy for the society detail page */
+  detail: string;
 };
 
 export const societies: Society[] = [
@@ -58,6 +61,8 @@ export const societies: Society[] = [
     themes: ["Autonomous systems", "Control & perception", "Mechatronics", "Embedded robotics"],
     accent: "var(--accent-teal)",
     accentName: "teal",
+    detail:
+      "Members prototype and program robots, work through the control and perception problems that make autonomy hard, and get hands-on with the mechatronics that connect code to motion. It is a place for anyone who wants to build systems that act in the physical world.",
   },
   {
     id: "sps",
@@ -69,6 +74,8 @@ export const societies: Society[] = [
     themes: ["Digital signal processing", "Computer vision", "Speech & audio", "ML for signals"],
     accent: "var(--accent-purple)",
     accentName: "purple",
+    detail:
+      "From filtering and transforms to computer vision and audio, members study how signals carry information and how to make sense of them. Increasingly that means pairing classical signal processing with machine learning — a strong foundation for research and industry alike.",
   },
   {
     id: "comsoc",
@@ -80,6 +87,8 @@ export const societies: Society[] = [
     themes: ["Wireless systems", "Networking", "Communication protocols", "5G & beyond"],
     accent: "var(--brand-deep)",
     accentName: "blue",
+    detail:
+      "Members explore the systems that move data across the world — wireless links, networks, and the protocols that hold modern connectivity together. It is the discipline behind everything from mobile networks to the next generation of communication standards.",
   },
   {
     id: "wie",
@@ -91,6 +100,8 @@ export const societies: Society[] = [
     themes: ["Mentorship", "Leadership", "Technical community", "Outreach"],
     accent: "var(--accent-red)",
     accentName: "red",
+    detail:
+      "Women in Engineering is a community and a platform — mentorship, technical collaboration, and leadership opportunities that help women in engineering grow and lead. It works across the branch to make sure talent has the support and visibility it deserves.",
   },
   {
     id: "sensors",
@@ -102,6 +113,8 @@ export const societies: Society[] = [
     themes: ["Sensing & instrumentation", "IoT", "Measurement systems", "Connected devices"],
     accent: "var(--accent-green)",
     accentName: "green",
+    detail:
+      "The Sensors Council sits where hardware meets data — sensing, instrumentation, and the connected devices that measure and respond to the world. Members work across IoT nodes, measurement systems, and the electronics that turn physical phenomena into usable signals.",
   },
 ];
 

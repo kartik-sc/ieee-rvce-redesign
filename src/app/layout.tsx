@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { SmoothScroll } from "@/components/motion/smooth-scroll";
+import { SiteHeader } from "@/components/sections/site-header";
+import { SiteFooter } from "@/components/sections/site-footer";
 import "./globals.css";
 
 const plexSans = IBM_Plex_Sans({
@@ -46,8 +49,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${plexSans.variable} ${plexMono.variable} h-full`}
     >
-      <body className="min-h-full flex flex-col bg-bg text-text">
-        <TooltipProvider delayDuration={200}>{children}</TooltipProvider>
+      <body className="flex min-h-dvh flex-col bg-bg text-text">
+        <SmoothScroll>
+          <TooltipProvider delayDuration={200}>
+            <SiteHeader />
+            {children}
+            <SiteFooter />
+          </TooltipProvider>
+        </SmoothScroll>
       </body>
     </html>
   );
