@@ -27,18 +27,18 @@ export const metadata: Metadata = {
     template: "%s · IEEE RVCE",
   },
   description:
-    "The IEEE Student Branch at RV College of Engineering (STB11651). 200+ members across RAS, SPS, ComSoc, WIE and the Sensors Council, advancing technology for humanity since 2017.",
+    "IEEE RVCE at RV College of Engineering — 200+ members across ten technical societies and two affinity groups, advancing technology for humanity since 2017.",
   keywords: [
     "IEEE RVCE",
-    "IEEE Student Branch",
     "RV College of Engineering",
+    "IEEE societies",
     "CSITSS",
     "STB11651",
   ],
   openGraph: {
     title: "IEEE RVCE — Advancing Technology for Humanity",
     description:
-      "The IEEE Student Branch at RV College of Engineering. 200+ members, five active societies, and the flagship CSITSS conference.",
+      "200+ members, ten technical societies and two affinity groups at RV College of Engineering.",
     type: "website",
   },
 };

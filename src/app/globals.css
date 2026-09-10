@@ -41,6 +41,10 @@
   --color-ieee-green: var(--accent-green);
   --color-ieee-purple: var(--accent-purple);
   --color-ieee-teal: var(--accent-teal);
+  --color-ieee-amber: var(--accent-amber);
+  --color-ieee-sky: var(--accent-sky);
+  --color-ieee-indigo: var(--accent-indigo);
+  --color-ieee-magenta: var(--accent-magenta);
 
   /* neutrals */
   --color-bg: var(--bg);
@@ -61,17 +65,21 @@
   --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 
-  --text-display: clamp(3rem, 7vw, 6.5rem);
-  --text-display--line-height: 0.98;
-  --text-display--letter-spacing: -0.02em;
+  --text-mega: clamp(3.5rem, 10vw, 9.5rem);
+  --text-mega--line-height: 0.92;
+  --text-mega--letter-spacing: -0.035em;
+  --text-display: clamp(3rem, 7.5vw, 7rem);
+  --text-display--line-height: 0.96;
+  --text-display--letter-spacing: -0.025em;
   --text-h1: clamp(2.5rem, 5.5vw, 5rem);
   --text-h1--line-height: 1.02;
-  --text-h1--letter-spacing: -0.015em;
-  --text-h2: clamp(1.9rem, 3.6vw, 3.25rem);
-  --text-h2--line-height: 1.06;
-  --text-h2--letter-spacing: -0.01em;
-  --text-h3: clamp(1.35rem, 2vw, 1.85rem);
+  --text-h1--letter-spacing: -0.02em;
+  --text-h2: clamp(2rem, 4vw, 3.5rem);
+  --text-h2--line-height: 1.05;
+  --text-h2--letter-spacing: -0.015em;
+  --text-h3: clamp(1.35rem, 2vw, 1.9rem);
   --text-h3--line-height: 1.15;
+  --text-h3--letter-spacing: -0.01em;
 
   /* restrained radius scale */
   --radius-sm: calc(var(--radius) * 0.55);
@@ -93,6 +101,15 @@
   --accent-green: #006341;
   --accent-purple: #772583;
   --accent-teal: #009ca6;
+  --accent-amber: #e4863a;
+  --accent-sky: #0089b8;
+  --accent-indigo: #3f4ea3;
+  --accent-magenta: #b5197a;
+
+  /* section rhythm — generous, editorial whitespace */
+  --section-y: clamp(5rem, 11vw, 10rem);
+  --gutter: clamp(1.5rem, 4vw, 4.5rem);
+  --measure: 1320px;
 
   /* neutrals */
   --bg: #f6f8fa;

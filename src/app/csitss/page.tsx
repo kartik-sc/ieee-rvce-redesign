@@ -4,7 +4,8 @@ import { ArrowLeft } from "lucide-react";
 import { MediaFrame } from "@/components/ui/media-frame";
 import { ActionLink } from "@/components/ui/action-link";
 import { MaskReveal } from "@/components/motion/mask-reveal";
-import { csitss, branch } from "@/content/site";
+import { csitss } from "@/content/csitss";
+import { branch } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "CSITSS 2026",
@@ -15,13 +16,13 @@ export default function CsitssPage() {
   return (
     <main>
       {/* hero — dominant IEEE blue */}
-      <section className="relative overflow-hidden bg-ieee-blue pt-32 pb-20 text-white md:pt-40 md:pb-28">
+      <section className="relative overflow-hidden bg-ieee-blue pt-36 pb-20 text-white md:pt-44 md:pb-28">
         <div
           aria-hidden
           className="pointer-events-none absolute -top-40 left-[-8%] h-[520px] w-[520px] rounded-full opacity-30 blur-3xl"
           style={{ background: "var(--ieee-cyan)" }}
         />
-        <div className="relative mx-auto w-full max-w-[1320px] px-[clamp(1.5rem,4vw,4.5rem)]">
+        <div className="relative mx-auto w-full max-w-[1320px] px-[var(--gutter)]">
           <Link
             href="/"
             className="group inline-flex items-center gap-2 text-sm font-medium text-white/70 transition-colors hover:text-white"
@@ -44,7 +45,7 @@ export default function CsitssPage() {
             <p className="font-mono text-3xl font-medium tracking-tight md:text-5xl">
               {csitss.datesLabel}
             </p>
-            <ActionLink href={csitss.href} target="_blank" rel="noreferrer" variant="inverse">
+            <ActionLink href={csitss.href} variant="inverse" arrow>
               Visit the conference site
             </ActionLink>
           </div>
@@ -52,22 +53,22 @@ export default function CsitssPage() {
       </section>
 
       {/* detail */}
-      <section className="bg-bg py-20 md:py-28">
-        <div className="mx-auto grid w-full max-w-[1320px] grid-cols-1 gap-14 px-[clamp(1.5rem,4vw,4.5rem)] lg:grid-cols-12 lg:items-center lg:gap-12">
+      <section className="bg-bg py-[var(--section-y)]">
+        <div className="mx-auto grid w-full max-w-[1320px] grid-cols-1 gap-14 px-[var(--gutter)] lg:grid-cols-12 lg:items-center lg:gap-12">
           <div className="lg:col-span-6">
-            <h2 className="text-h2 font-semibold text-balance">
-              <MaskReveal lines={["A decade of research at RVCE."]} />
+            <h2 className="text-h2 font-semibold text-balance text-brand-deep">
+              <MaskReveal lines={["Research at RVCE,", "on an international stage."]} />
             </h2>
             <p className="mt-6 max-w-lg leading-relaxed text-text-muted text-pretty">
               {csitss.blurb}
             </p>
             <p className="mt-4 max-w-lg leading-relaxed text-text-muted text-pretty">
-              Hosted by IEEE RVCE in {branch.location}, CSITSS reaches its{" "}
-              {csitss.edition.toLowerCase()} in 2026. Full programme, tracks and
-              registration live on the dedicated conference site.
+              Hosted by IEEE RVCE in {branch.city}, CSITSS returns in November
+              2026. Full programme, tracks and registration live on the dedicated
+              conference site.
             </p>
             <div className="mt-10">
-              <ActionLink href={csitss.href} target="_blank" rel="noreferrer">
+              <ActionLink href={csitss.href} arrow>
                 Explore CSITSS 2026
               </ActionLink>
             </div>

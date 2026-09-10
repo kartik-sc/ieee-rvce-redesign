@@ -1,19 +1,23 @@
 import { HeroSection } from "@/components/sections/hero-section";
-import { SocietyExplorer } from "@/components/sections/society-explorer";
-import { ConferenceFeature } from "@/components/sections/conference-feature";
-import { AboutSection } from "@/components/sections/about-section";
-import { EventsSection } from "@/components/sections/events-section";
-import { ContactCTA } from "@/components/sections/contact-cta";
+import { WhatWeDo } from "@/components/sections/what-we-do";
+import { SocietiesEcosystem } from "@/components/sections/societies-ecosystem";
+import { FeaturedEvents } from "@/components/sections/featured-events";
+import { AffinitiesPreview } from "@/components/sections/affinities-preview";
+import { ImpactSection } from "@/components/sections/impact-section";
+import { ArticlesPreview } from "@/components/sections/articles-preview";
+import { MembershipCta } from "@/components/sections/membership-cta";
 
 export default function Home() {
   return (
     <main>
       <HeroSection />
-      <SocietyExplorer />
-      <ConferenceFeature />
-      <AboutSection />
-      <EventsSection />
-      <ContactCTA />
+      <WhatWeDo />
+      <SocietiesEcosystem />
+      <FeaturedEvents />
+      <AffinitiesPreview />
+      <ImpactSection />
+      <ArticlesPreview />
+      <MembershipCta />
     </main>
   );
 }

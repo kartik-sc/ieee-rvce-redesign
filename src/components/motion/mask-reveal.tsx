@@ -66,7 +66,17 @@ export function MaskReveal({
         : { whileInView: "visible", viewport: { once: true, margin: "-12%" } })}
     >
       {lines.map((l, i) => (
-        <span key={i} style={{ display: "block", overflow: "hidden" }}>
+        // paddingBottom + equal negative marginBottom give descenders (g/y/p)
+        // room to render inside the clip box without changing line spacing.
+        <span
+          key={i}
+          style={{
+            display: "block",
+            overflow: "hidden",
+            paddingBottom: "0.2em",
+            marginBottom: "-0.2em",
+          }}
+        >
           <motion.span
             className={lineClassName}
             style={{ display: "block", willChange: "transform" }}

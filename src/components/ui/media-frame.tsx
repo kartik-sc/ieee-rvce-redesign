@@ -48,7 +48,7 @@ export function MediaFrame({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-lg border border-line/70",
+        "relative overflow-hidden rounded-none border border-line/70",
         className,
       )}
       style={{ aspectRatio: aspect }}
