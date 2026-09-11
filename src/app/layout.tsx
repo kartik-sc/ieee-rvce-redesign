@@ -23,7 +23,7 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://ieee-rvce.org"),
   title: {
-    default: "IEEE RVCE — Advancing Technology for Humanity",
+    default: "IEEE RV College of Engineering | Student Branch",
     template: "%s · IEEE RVCE",
   },
   description:
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     "STB11651",
   ],
   openGraph: {
-    title: "IEEE RVCE — Advancing Technology for Humanity",
+    title: "IEEE RV College of Engineering | Student Branch",
     description:
       "200+ members, ten technical societies and two affinity groups at RV College of Engineering.",
     type: "website",

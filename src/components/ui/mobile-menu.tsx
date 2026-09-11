@@ -30,13 +30,13 @@ export function MobileMenu({ light = false }: { light?: boolean }) {
   }, [open]);
 
   return (
-    <div className="md:hidden">
+    <div className="relative z-110 md:hidden">
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={() => setOpen((current) => !current)}
         aria-label="Open menu"
         className={cn(
-          "inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors",
+          "pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors",
           light ? "text-white hover:bg-white/10" : "text-brand-deep hover:bg-surface-muted",
         )}
       >
@@ -50,7 +50,7 @@ export function MobileMenu({ light = false }: { light?: boolean }) {
             role="dialog"
             aria-modal="true"
             aria-label="Menu"
-            className="fixed inset-0 z-[100] flex flex-col bg-dark-bg text-dark-text"
+            className="fixed inset-0 z-100 flex flex-col bg-dark-bg text-dark-text"
             initial={reduced ? { opacity: 0 } : { clipPath: "inset(0 0 100% 0)" }}
             animate={reduced ? { opacity: 1 } : { clipPath: "inset(0 0 0% 0)" }}
             exit={reduced ? { opacity: 0 } : { clipPath: "inset(0 0 100% 0)" }}

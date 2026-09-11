@@ -35,7 +35,7 @@ export function SiteHeader() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
+        "fixed inset-x-0 top-0 z-100 transition-colors duration-300",
         overHero
           ? "border-b border-transparent"
           : "border-b border-line bg-bg/80 backdrop-blur-md",
@@ -96,7 +96,7 @@ export function SiteHeader() {
 
       {!overHero ? (
         <motion.div
-          className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-ieee-cyan"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-0.5 origin-left bg-ieee-cyan"
           style={{ scaleX: progress }}
           aria-hidden
         />
