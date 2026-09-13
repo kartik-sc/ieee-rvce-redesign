@@ -1,0 +1,246 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+  IEEE RVCE design tokens.
+  Brand anchors (#00629B blue, #00B5E2 cyan) are fixed project inputs.
+  shadcn's semantic tokens are remapped onto the IEEE system below so every
+  primitive inherits the institutional look from one place.
+*/
+
+@theme inline {
+  /* shadcn semantic surface (remapped to IEEE values in :root) */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* IEEE brand + expanded palette exposed as utilities */
+  --color-ieee-blue: var(--ieee-blue);
+  --color-ieee-cyan: var(--ieee-cyan);
+  --color-brand-deep: var(--brand-deep);
+  --color-gold: var(--accent-gold);
+  --color-ieee-red: var(--accent-red);
+  --color-ieee-green: var(--accent-green);
+  --color-ieee-purple: var(--accent-purple);
+  --color-ieee-teal: var(--accent-teal);
+  --color-ieee-amber: var(--accent-amber);
+  --color-ieee-sky: var(--accent-sky);
+  --color-ieee-indigo: var(--accent-indigo);
+  --color-ieee-magenta: var(--accent-magenta);
+
+  /* neutrals */
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-line: var(--line);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+
+  /* dark-accent surfaces */
+  --color-dark-bg: var(--dark-bg);
+  --color-dark-surface: var(--dark-surface);
+  --color-dark-line: var(--dark-line);
+  --color-dark-text: var(--dark-text);
+  --color-dark-muted: var(--dark-muted);
+
+  /* type family + scale */
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --font-display: var(--font-barlow-condensed), ui-sans-serif, sans-serif;
+
+  --text-mega: clamp(3.5rem, 10vw, 9.5rem);
+  --text-mega--line-height: 0.92;
+  --text-mega--letter-spacing: -0.035em;
+  --text-display: clamp(3rem, 7.5vw, 7rem);
+  --text-display--line-height: 0.96;
+  --text-display--letter-spacing: -0.025em;
+  --text-h1: clamp(2.5rem, 5.5vw, 5rem);
+  --text-h1--line-height: 1.02;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h2: clamp(2rem, 4vw, 3.5rem);
+  --text-h2--line-height: 1.05;
+  --text-h2--letter-spacing: -0.015em;
+  --text-h3: clamp(1.35rem, 2vw, 1.9rem);
+  --text-h3--line-height: 1.15;
+  --text-h3--letter-spacing: -0.01em;
+
+  /* restrained radius scale */
+  --radius-sm: calc(var(--radius) * 0.55);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.5);
+  --radius-2xl: calc(var(--radius) * 2);
+}
+
+:root {
+  /* brand anchors — do not alter */
+  --ieee-blue: #00629b;
+  --ieee-cyan: #00b5e2;
+  --brand-deep: #003b5c;
+
+  /* expanded accents — selective, state/section only */
+  --accent-gold: #ffc72c;
+  --accent-red: #ba0c2f;
+  --accent-green: #006341;
+  --accent-purple: #772583;
+  --accent-teal: #009ca6;
+  --accent-amber: #e4863a;
+  --accent-sky: #0089b8;
+  --accent-indigo: #3f4ea3;
+  --accent-magenta: #b5197a;
+
+  /* section rhythm — generous, editorial whitespace */
+  --section-y: clamp(5rem, 11vw, 10rem);
+  --gutter: clamp(1.5rem, 4vw, 4.5rem);
+  --measure: 1320px;
+
+  /* neutrals */
+  --bg: #f5f0e8;
+  --surface: #fdfaf4;
+  --surface-muted: #ede8dc;
+  --line: #d4ccb8;
+  --text: #1a1410;
+  --text-muted: #6b5f4f;
+
+  /* dark-accent surfaces */
+  --dark-bg: #071a28;
+  --dark-surface: #0d2a3d;
+  --dark-line: #23445a;
+  --dark-text: #f4f8fa;
+  --dark-muted: #b7c8d2;
+
+  /* shadcn semantic tokens → IEEE system */
+  --background: var(--bg);
+  --foreground: var(--text);
+  --card: var(--surface);
+  --card-foreground: var(--text);
+  --popover: var(--surface);
+  --popover-foreground: var(--text);
+  --primary: var(--ieee-blue);
+  --primary-foreground: #ffffff;
+  --secondary: var(--surface-muted);
+  --secondary-foreground: var(--brand-deep);
+  --muted: var(--surface-muted);
+  --muted-foreground: var(--text-muted);
+  --accent: #e2eef5;
+  --accent-foreground: var(--brand-deep);
+  --destructive: var(--accent-red);
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--ieee-cyan);
+
+  --radius: 0.7rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/60;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--ieee-cyan) 32%, transparent);
+    color: var(--brand-deep);
+  }
+  :focus-visible {
+    outline: 2px solid var(--ieee-cyan);
+    outline-offset: 2px;
+  }
+}
+
+/* ---- editorial utility classes ---- */
+
+.ghost-num {
+  font-family: var(--font-barlow-condensed), ui-sans-serif, sans-serif;
+  font-weight: 900;
+  font-size: clamp(8rem, 22vw, 18rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  opacity: 0.045;
+  user-select: none;
+  pointer-events: none;
+  position: absolute;
+}
+
+.section-rule {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--line);
+}
+
+/* ---- decorative motion (frozen under reduced-motion below) ---- */
+
+.media-sheen {
+  background: linear-gradient(
+    100deg,
+    transparent,
+    color-mix(in oklab, white 22%, transparent),
+    transparent
+  );
+  filter: blur(6px);
+  transform: skewX(-12deg);
+  animation: media-sheen 7s ease-in-out infinite;
+}
+@keyframes media-sheen {
+  0% {
+    transform: translateX(-150%) skewX(-12deg);
+  }
+  60%,
+  100% {
+    transform: translateX(560%) skewX(-12deg);
+  }
+}
+
+.marquee-track {
+  animation: marquee var(--marquee-duration, 34s) linear infinite;
+  animation-direction: var(--marquee-direction, normal);
+  will-change: transform;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
