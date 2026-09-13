@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { animate, useInView, useReducedMotion } from "motion/react";
 
 type CounterProps = {
@@ -11,7 +11,6 @@ type CounterProps = {
   className?: string;
 };
 
-/** Counts up from zero once, when scrolled into view. Snaps under reduced motion. */
 export function Counter({
   to,
   prefix = "",
@@ -22,12 +21,17 @@ export function Counter({
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-8%" });
   const reduced = useReducedMotion();
-  const [value, setValue] = useState(0);
+  // SSR: renders the final value so the fallback never shows 0.
+  // useLayoutEffect resets to 0 client-side before first paint so the
+  // count-up animation plays from zero.
+  const [value, setValue] = useState(to);
+
+  useLayoutEffect(() => {
+    setValue(0);
+  }, []);
 
   useEffect(() => {
     if (!inView) return;
-    // duration 0 under reduced motion snaps to the target via onUpdate,
-    // avoiding a synchronous setState in the effect body.
     const controls = animate(0, to, {
       duration: reduced ? 0 : duration,
       ease: [0.22, 1, 0.36, 1],

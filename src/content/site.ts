@@ -37,4 +37,7 @@ export const nav: NavLink[] = [
   { label: "Articles", href: "/articles" },
 ];
 
+/** Three-link set shown in the header and mobile menu. */
+export const headerNav: NavLink[] = nav.slice(0, 3);
+
 export const societyHref = (id: string) => `/societies/${id}`;

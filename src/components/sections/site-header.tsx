@@ -7,7 +7,7 @@ import { Wordmark } from "@/components/ui/wordmark";
 import { ActionLink } from "@/components/ui/action-link";
 import { Magnetic } from "@/components/motion/magnetic";
 import { MobileMenu } from "@/components/ui/mobile-menu";
-import { nav } from "@/content/site";
+import { headerNav as nav } from "@/content/site";
 import { cn } from "@/lib/utils";
 
 export function SiteHeader() {

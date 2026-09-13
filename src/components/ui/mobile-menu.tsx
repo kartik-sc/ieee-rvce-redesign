@@ -1,111 +1,161 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Menu, X } from "lucide-react";
-import { nav } from "@/content/site";
+import { headerNav } from "@/content/site";
 import { Wordmark } from "@/components/ui/wordmark";
 import { ActionLink } from "@/components/ui/action-link";
 import { cn } from "@/lib/utils";
 
-const items = [{ label: "Home", href: "/" }, ...nav];
+const items = [{ label: "Home", href: "/" }, ...headerNav];
 
 export function MobileMenu({ light = false }: { light?: boolean }) {
   const [open, setOpen] = useState(false);
   const reduced = useReducedMotion();
   const pathname = usePathname();
   const panelRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
+  // ESC key, scroll lock, and focus-back-to-trigger on close
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onKey = (e: globalThis.KeyboardEvent) => e.key === "Escape" && setOpen(false);
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
+      triggerRef.current?.focus();
     };
   }, [open]);
 
+  // Focus first item when panel opens
+  useEffect(() => {
+    if (!open) return;
+    const el = panelRef.current?.querySelector<HTMLElement>(
+      "a[href], button:not([disabled])",
+    );
+    el?.focus();
+  }, [open]);
+
+  // Focus trap: keep Tab within the panel while open
+  const handlePanelKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.key !== "Tab") return;
+    const focusable = panelRef.current?.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    );
+    if (!focusable?.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  };
+
   return (
     <div className="relative z-110 md:hidden">
+      {/* Hamburger trigger — animates Menu ↔ X */}
       <button
+        ref={triggerRef}
         type="button"
-        onClick={() => setOpen((current) => !current)}
-        aria-label="Open menu"
+        onClick={() => setOpen((o) => !o)}
+        aria-label="Navigation menu"
+        aria-expanded={open}
+        aria-controls="mobile-panel"
         className={cn(
           "pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors",
           light ? "text-white hover:bg-white/10" : "text-brand-deep hover:bg-surface-muted",
         )}
       >
-        <Menu className="size-5" />
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.span
+            key={open ? "x" : "menu"}
+            initial={{ rotate: open ? -45 : 45, opacity: 0 }}
+            animate={{ rotate: 0, opacity: 1 }}
+            exit={{ rotate: open ? 45 : -45, opacity: 0 }}
+            transition={{ duration: 0.18, ease: "easeInOut" }}
+            className="inline-flex"
+          >
+            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+          </motion.span>
+        </AnimatePresence>
       </button>
 
       <AnimatePresence>
-        {open ? (
+        {open && (
           <motion.div
             ref={panelRef}
+            id="mobile-panel"
             role="dialog"
             aria-modal="true"
-            aria-label="Menu"
+            aria-label="Navigation menu"
+            onKeyDown={handlePanelKeyDown}
+            // Tap on the backdrop (outside nav content) closes the menu
+            onClick={() => setOpen(false)}
             className="fixed inset-0 z-100 flex flex-col bg-dark-bg text-dark-text"
             initial={reduced ? { opacity: 0 } : { clipPath: "inset(0 0 100% 0)" }}
             animate={reduced ? { opacity: 1 } : { clipPath: "inset(0 0 0% 0)" }}
             exit={reduced ? { opacity: 0 } : { clipPath: "inset(0 0 100% 0)" }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="flex h-16 items-center justify-between px-6">
-              <Wordmark variant="white" />
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                aria-label="Close menu"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full text-white hover:bg-white/10"
-              >
-                <X className="size-5" />
-              </button>
-            </div>
+            {/* Stop propagation so clicks inside the content don't close the panel */}
+            <div onClick={(e) => e.stopPropagation()} className="flex flex-1 flex-col">
+              <div className="flex h-16 items-center justify-between px-6">
+                <Wordmark variant="white" />
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  aria-label="Close menu"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full text-white hover:bg-white/10"
+                >
+                  <X className="size-5" />
+                </button>
+              </div>
 
-            <nav className="flex flex-1 flex-col justify-center gap-1 px-6" aria-label="Mobile">
-              {items.map((item, i) => {
-                const active = pathname === item.href;
-                return (
-                  <motion.div
-                    key={item.href}
-                    initial={reduced ? false : { opacity: 0, y: 24 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: reduced ? 0 : 0.12 + i * 0.05, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    <Link
-                      href={item.href}
-                      onClick={() => setOpen(false)}
-                      className={cn(
-                        "block border-b border-dark-line py-4 text-4xl font-semibold tracking-tight transition-colors",
-                        active ? "text-ieee-cyan" : "text-white hover:text-ieee-cyan",
-                      )}
+              <nav className="flex flex-1 flex-col justify-center gap-1 px-6" aria-label="Mobile">
+                {items.map((item, i) => {
+                  const active = pathname === item.href;
+                  return (
+                    <motion.div
+                      key={item.href}
+                      initial={reduced ? false : { opacity: 0, y: 24 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: reduced ? 0 : 0.12 + i * 0.05, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                     >
-                      {item.label}
-                    </Link>
-                  </motion.div>
-                );
-              })}
-            </nav>
+                      <Link
+                        href={item.href}
+                        onClick={() => setOpen(false)}
+                        className={cn(
+                          "block border-b border-dark-line py-4 text-4xl font-semibold tracking-tight transition-colors",
+                          active ? "text-ieee-cyan" : "text-white hover:text-ieee-cyan",
+                        )}
+                      >
+                        {item.label}
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </nav>
 
-            <div className="px-6 pb-10">
-              <ActionLink
-                href="/membership"
-                variant="cyan"
-                size="lg"
-                className="w-full"
-                onClick={() => setOpen(false)}
-              >
-                Become a member
-              </ActionLink>
+              <div className="px-6 pb-10">
+                <ActionLink
+                  href="/membership"
+                  variant="cyan"
+                  size="lg"
+                  className="w-full"
+                  onClick={() => setOpen(false)}
+                >
+                  Become a member
+                </ActionLink>
+              </div>
             </div>
           </motion.div>
-        ) : null}
+        )}
       </AnimatePresence>
     </div>
   );
