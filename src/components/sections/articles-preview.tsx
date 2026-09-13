@@ -8,17 +8,17 @@ const preview = articles.slice(0, 3);
 
 export function ArticlesPreview() {
   return (
-    <section className="bg-bg py-[var(--section-y)]">
+    <section className="bg-surface py-[var(--section-y)]">
       <div className="mx-auto w-full max-w-[1320px] px-[var(--gutter)]">
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
-            <div className="mb-6 flex items-center gap-3">
-              <span className="h-2.5 w-2.5 rounded-[2px] bg-ieee-blue" aria-hidden />
-              <span className="text-sm font-medium text-text-muted">
+            <div className="mb-6">
+              <span className="section-rule mb-4 block" />
+              <span className="font-mono text-xs uppercase tracking-[0.22em] text-text-muted">
                 Written by members
               </span>
             </div>
-            <h2 className="text-h1 font-semibold tracking-tight text-brand-deep text-balance">
+            <h2 className="text-h1 font-semibold tracking-tight text-text text-balance">
               <MaskReveal lines={["Ideas, research and", "experiences, in members' words."]} />
             </h2>
           </div>

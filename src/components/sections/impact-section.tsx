@@ -1,27 +1,36 @@
-import { Reveal } from "@/components/ui/reveal";
 import { MaskReveal } from "@/components/motion/mask-reveal";
 import { Counter } from "@/components/motion/counter";
-import { EventsBarChart } from "@/components/ui/events-bar-chart";
 import { branchAwards, memberAwards } from "@/content/about";
 
 const awardCount = branchAwards.length + memberAwards.length;
-// Home stays free of the phrase "Student Branch"; the full official list
-// (including award titles that contain it) lives on the About page.
-const highlights = branchAwards
-  .filter((a) => !a.includes("Student Branch"))
-  .slice(0, 4);
+const highlights = [...branchAwards, ...memberAwards].slice(0, 6);
 
 export function ImpactSection() {
   return (
-    <section className="bg-dark-bg py-[var(--section-y)] text-dark-text">
-      <div className="mx-auto w-full max-w-[1320px] px-[var(--gutter)]">
-        <div className="mb-6 flex items-center gap-3">
-          <span className="h-2.5 w-2.5 rounded-[2px] bg-ieee-cyan" aria-hidden />
-          <span className="text-sm font-medium text-dark-muted">
+    <section className="relative overflow-hidden bg-dark-bg py-[var(--section-y)] text-dark-text">
+      {/* Ghost section number — extra low opacity on dark bg */}
+      <span
+        className="ghost-num"
+        style={{ top: "-1rem", left: "var(--gutter)", opacity: 0.03 }}
+        aria-hidden
+      >
+        04
+      </span>
+
+      <div className="relative mx-auto w-full max-w-[1320px] px-[var(--gutter)]">
+        {/* Kicker */}
+        <div className="mb-10">
+          <span
+            className="section-rule mb-5 block"
+            style={{ background: "var(--dark-line)" }}
+          />
+          <span className="font-mono text-xs uppercase tracking-[0.22em] text-dark-muted">
             Recognition & impact
           </span>
         </div>
-        <h2 className="max-w-3xl text-h1 font-semibold tracking-tight text-balance">
+
+        {/* Headline */}
+        <h2 className="mb-14 max-w-3xl text-h1 font-semibold tracking-tight text-balance">
           <MaskReveal
             lines={[
               "Consistent work,",
@@ -32,39 +41,46 @@ export function ImpactSection() {
           />
         </h2>
 
-        <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-16">
+        {/* Main content: giant number + awards list */}
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
+          {/* Left: oversized award count anchor */}
           <div className="lg:col-span-5">
-            <dl className="grid grid-cols-2 gap-8">
-              <div>
-                <dd className="text-5xl font-semibold text-white md:text-6xl">
-                  <Counter to={awardCount} />
-                </dd>
-                <dt className="mt-2 text-sm text-dark-muted">Awards &amp; honours</dt>
-              </div>
-              <div>
-                <dd className="text-5xl font-semibold text-white md:text-6xl">100+</dd>
-                <dt className="mt-2 text-sm text-dark-muted">Events since 2017</dt>
-              </div>
-            </dl>
+            <div
+              className="font-display font-[900] leading-none tracking-[-0.04em] text-white"
+              style={{ fontSize: "clamp(7rem, 18vw, 16rem)" }}
+            >
+              <Counter to={awardCount} />
+            </div>
+            <p className="mt-1 font-mono text-xs uppercase tracking-[0.22em] text-dark-muted">
+              Awards &amp; honours
+            </p>
 
-            <ul className="mt-10 space-y-4 border-t border-dark-line pt-8">
-              {highlights.map((award) => (
-                <li key={award} className="flex gap-3 text-sm text-dark-muted">
-                  <span
-                    className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ieee-cyan"
-                    aria-hidden
-                  />
-                  <span className="text-pretty">{award}</span>
+            <div className="mt-8">
+              <p
+                className="font-display font-[900] leading-none tracking-[-0.03em] text-white/20"
+                style={{ fontSize: "clamp(3.5rem, 8vw, 7rem)" }}
+              >
+                100+
+              </p>
+              <p className="mt-1 font-mono text-xs uppercase tracking-[0.22em] text-dark-muted">
+                Events since {2017}
+              </p>
+            </div>
+          </div>
+
+          {/* Right: award list */}
+          <div className="lg:col-span-7">
+            <ul className="space-y-4 border-t pt-6" style={{ borderColor: "var(--dark-line)" }}>
+              {highlights.map((award, i) => (
+                <li key={award} className="flex items-baseline gap-4 text-sm">
+                  <span className="shrink-0 font-mono text-xs text-dark-muted">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="text-pretty text-dark-muted leading-relaxed">{award}</span>
                 </li>
               ))}
             </ul>
           </div>
-
-          <Reveal className="lg:col-span-7" delay={0.1}>
-            <div className="rounded-none border border-line bg-surface p-6 md:p-8">
-              <EventsBarChart />
-            </div>
-          </Reveal>
         </div>
       </div>
     </section>

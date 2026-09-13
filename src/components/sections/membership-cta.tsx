@@ -1,51 +1,63 @@
-import { Reveal } from "@/components/ui/reveal";
+"use client";
+
+import Image from "next/image";
+import { motion, useReducedMotion } from "motion/react";
 import { MaskReveal } from "@/components/motion/mask-reveal";
 import { ActionLink } from "@/components/ui/action-link";
-import { Magnetic } from "@/components/motion/magnetic";
-import { journey } from "@/content/membership";
+import { ease } from "@/lib/motion";
 
 export function MembershipCta() {
-  return (
-    <section className="bg-ieee-blue py-[var(--section-y)] text-white">
-      <div className="mx-auto w-full max-w-[1320px] px-[var(--gutter)]">
-        <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
-          <h2 className="max-w-2xl text-display font-semibold tracking-tight text-balance">
-            <MaskReveal lines={["Your place", "in IEEE RVCE."]} />
-          </h2>
-          <div className="flex flex-wrap gap-3">
-            <Magnetic>
-              <ActionLink href="/membership" variant="inverse" size="lg" arrow>
-                Become a member
-              </ActionLink>
-            </Magnetic>
-            <ActionLink
-              href="/membership"
-              size="lg"
-              className="border border-white/40 text-white hover:bg-white/10"
-            >
-              See benefits
-            </ActionLink>
-          </div>
-        </div>
+  const reduced = useReducedMotion();
+  const rise = (delay: number) =>
+    reduced
+      ? {}
+      : {
+          initial: { opacity: 0, y: 14, filter: "blur(4px)" },
+          animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+          transition: { duration: 0.65, ease: ease.out, delay },
+        };
 
-        <ol className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {journey.map((stage, i) => (
-            <Reveal as="li" key={stage.step} delay={i * 0.08}>
-              <div className="flex items-center gap-3">
-                <span className="font-mono text-sm text-white/60">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="h-px flex-1 bg-white/25" aria-hidden />
-              </div>
-              <h3 className="mt-4 text-h3 font-semibold tracking-tight">
-                {stage.step}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-white/75 text-pretty">
-                {stage.detail}
-              </p>
-            </Reveal>
-          ))}
-        </ol>
+  return (
+    <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden bg-brand-deep py-[var(--section-y)] text-white">
+      {/* Logo watermark */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 flex items-center justify-center"
+      >
+        <Image
+          src="/media/logos/ieee_rvce_new_white.png"
+          width={800}
+          height={300}
+          alt=""
+          className="h-auto w-[min(640px,85vw)] opacity-[0.04]"
+        />
+      </div>
+
+      {/* Centered content */}
+      <div className="relative mx-auto w-full max-w-[1320px] px-[var(--gutter)] text-center">
+        <h2 className="text-display font-semibold tracking-tight text-balance">
+          <MaskReveal lines={["Your place", "in IEEE RVCE."]} />
+        </h2>
+
+        <motion.p
+          className="mx-auto mt-4 max-w-md font-mono text-sm tracking-wider text-white/45"
+          {...rise(0.5)}
+        >
+          Join 200+ student engineers shaping the future of technology at RV College of Engineering.
+        </motion.p>
+
+        <motion.div className="mt-8" {...rise(0.7)}>
+          <ActionLink href="/membership" variant="inverse" size="lg" arrow>
+            Become a member
+          </ActionLink>
+        </motion.div>
+
+        <motion.p
+          className="mt-12 font-mono text-xs tracking-[0.22em] text-white/20"
+          {...rise(0.9)}
+        >
+          IEEE · RVCE · STB11651 · EST. 2017
+        </motion.p>
       </div>
     </section>
   );
